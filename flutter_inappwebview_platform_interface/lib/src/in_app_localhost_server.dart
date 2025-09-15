@@ -76,52 +76,58 @@ class DefaultInAppLocalhostServer extends PlatformInAppLocalhostServer {
 
     final completer = Completer();
 
-    runZonedGuarded(() {
-      HttpServer.bind('127.0.0.1', _port, shared: _shared).then((server) {
-        print('Server running on http://localhost:' + _port.toString());
+    runZonedGuarded(
+      () {
+        HttpServer.bind('127.0.0.1', _port, shared: _shared).then((server) {
+          print('Server running on http://localhost:' + _port.toString());
 
-        this._server = server;
+          this._server = server;
 
-        server.listen((HttpRequest request) async {
-          Uint8List body = Uint8List(0);
+          server.listen((HttpRequest request) async {
+            Uint8List body = Uint8List(0);
 
-          var path = request.requestedUri.path;
-          path = (path.startsWith('/')) ? path.substring(1) : path;
-          path += (path.endsWith('/')) ? _directoryIndex : '';
-          if (path == '') {
-            // if the path still empty, try to load the index file
-            path = _directoryIndex;
-          }
-          path = _documentRoot + path;
-
-          try {
-            body = (await rootBundle.load(Uri.decodeFull(path)))
-                .buffer
-                .asUint8List();
-          } catch (e) {
-            print(Uri.decodeFull(path));
-            print(e.toString());
-            request.response.close();
-            return;
-          }
-
-          var contentType = ContentType('text', 'html', charset: 'utf-8');
-          if (!request.requestedUri.path.endsWith('/') &&
-              request.requestedUri.pathSegments.isNotEmpty) {
-            final mimeType = MimeTypeResolver.lookup(request.requestedUri.path);
-            if (mimeType != null) {
-              contentType = _getContentTypeFromMimeType(mimeType);
+            var path = request.requestedUri.path;
+            path = (path.startsWith('/')) ? path.substring(1) : path;
+            path += (path.endsWith('/')) ? _directoryIndex : '';
+            if (path == '') {
+              // if the path still empty, try to load the index file
+              path = _directoryIndex;
             }
-          }
+            path = _documentRoot + path;
 
-          request.response.headers.contentType = contentType;
-          request.response.add(body);
-          request.response.close();
+            try {
+              body = (await rootBundle.load(Uri.decodeFull(path)))
+                  .buffer
+                  .asUint8List();
+            } catch (e) {
+              print(Uri.decodeFull(path));
+              print(e.toString());
+              request.response.close();
+              return;
+            }
+
+            var contentType = ContentType('text', 'html', charset: 'utf-8');
+            if (!request.requestedUri.path.endsWith('/') &&
+                request.requestedUri.pathSegments.isNotEmpty) {
+              final mimeType =
+                  MimeTypeResolver.lookup(request.requestedUri.path);
+              if (mimeType != null) {
+                contentType = _getContentTypeFromMimeType(mimeType);
+              }
+            }
+
+            request.response.headers.contentType = contentType;
+            request.response.add(body);
+            request.response.close();
+          });
+
+          completer.complete();
         });
-
-        completer.complete();
-      });
-    }, (e, stackTrace) => Error.throwWithStackTrace(e, stackTrace));
+      },
+      (e, stackTrace) => completer.completeError(
+        Error.throwWithStackTrace(e, stackTrace),
+      ),
+    );
 
     return completer.future;
   }
