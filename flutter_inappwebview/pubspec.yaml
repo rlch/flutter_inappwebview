@@ -29,7 +29,11 @@ dependencies:
   flutter_inappwebview_ios: ^1.1.2
   flutter_inappwebview_macos: ^1.1.2
   flutter_inappwebview_web: ^1.1.2
-  flutter_inappwebview_windows: ^0.6.0
+  flutter_inappwebview_windows:
+    git:
+      url: https://github.com/rlch/flutter_inappwebview.git
+      ref: v6.1.5
+      path: flutter_inappwebview_windows
 
 dev_dependencies:
   flutter_test:
@@ -96,4 +100,3 @@ flutter:
 false_secrets:
   - /test_node_server/*.pem
   - /test_node_server/*.pfx
-
