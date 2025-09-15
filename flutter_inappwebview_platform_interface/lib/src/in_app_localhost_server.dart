@@ -121,7 +121,7 @@ class DefaultInAppLocalhostServer extends PlatformInAppLocalhostServer {
 
         completer.complete();
       });
-    }, (e, stackTrace) => print('Error: $e $stackTrace'));
+    }, (e, stackTrace) => Error.throwWithStackTrace(e, stackTrace));
 
     return completer.future;
   }
