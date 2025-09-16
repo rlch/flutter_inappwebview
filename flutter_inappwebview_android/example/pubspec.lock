@@ -78,9 +78,11 @@ packages:
   flutter_inappwebview_android:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      path: flutter_inappwebview_android
+      ref: "v6.1.5"
+      resolved-ref: f67ae1f34868c7660c16a2473f53a7a7bfb6f784
+      url: "https://github.com/rlch/flutter_inappwebview.git"
+    source: git
     version: "1.1.3"
   flutter_inappwebview_internal_annotations:
     dependency: transitive
@@ -93,9 +95,10 @@ packages:
   flutter_inappwebview_platform_interface:
     dependency: transitive
     description:
-      path: "../../flutter_inappwebview_platform_interface"
-      relative: true
-    source: path
+      name: flutter_inappwebview_platform_interface
+      sha256: cf5323e194096b6ede7a1ca808c3e0a078e4b33cc3f6338977d75b4024ba2500
+      url: "https://pub.dev"
+    source: hosted
     version: "1.3.0+1"
   flutter_lints:
     dependency: "direct dev"
