@@ -29,7 +29,10 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   build_runner: ^2.4.12
   generators:
-    path: ../dev_packages/generators
+    git:
+      url: https://github.com/rlch/flutter_inappwebview.git
+      ref: v6.1.5
+      path: dev_packages/generators
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

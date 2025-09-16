@@ -125,7 +125,8 @@ class DefaultInAppLocalhostServer extends PlatformInAppLocalhostServer {
         });
       },
       (e, stackTrace) => completer.completeError(
-        Error.throwWithStackTrace(e, stackTrace),
+        e,
+        stackTrace,
       ),
     );
 

@@ -30,21 +30,42 @@ dependencies:
   # mime: ^1.0.4
   # connectivity: ^0.4.5+6
   flutter_inappwebview:
-    path: ../
+    git:
+      url: https://github.com/rlch/flutter_inappwebview.git
+      ref: v6.1.5
+      path: flutter_inappwebview
 
 dependency_overrides:
   flutter_inappwebview_platform_interface:
-    path: ../../flutter_inappwebview_platform_interface
+    git:
+      url: https://github.com/rlch/flutter_inappwebview.git
+      ref: v6.1.5
+      path: flutter_inappwebview_platform_interface
   flutter_inappwebview_android:
-    path: ../../flutter_inappwebview_android
+    git:
+      url: https://github.com/rlch/flutter_inappwebview.git
+      ref: v6.1.5
+      path: flutter_inappwebview_android
   flutter_inappwebview_ios:
-    path: ../../flutter_inappwebview_ios
+    git:
+      url: https://github.com/rlch/flutter_inappwebview.git
+      ref: v6.1.5
+      path: flutter_inappwebview_ios
   flutter_inappwebview_macos:
-    path: ../../flutter_inappwebview_macos
+    git:
+      url: https://github.com/rlch/flutter_inappwebview.git
+      ref: v6.1.5
+      path: flutter_inappwebview_macos
   flutter_inappwebview_web:
-    path: ../../flutter_inappwebview_web
+    git:
+      url: https://github.com/rlch/flutter_inappwebview.git
+      ref: v6.1.5
+      path: flutter_inappwebview_web
   flutter_inappwebview_windows:
-    path: ../../flutter_inappwebview_windows
+    git:
+      url: https://github.com/rlch/flutter_inappwebview.git
+      ref: v6.1.5
+      path: flutter_inappwebview_windows
 
 dev_dependencies:
   flutter_test:
