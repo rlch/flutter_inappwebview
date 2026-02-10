@@ -17,7 +17,7 @@ public class PrintJobChannelDelegate: ChannelDelegate {
     }
     
     public override func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        let arguments = call.arguments as? NSDictionary
+        let _ = call.arguments as? NSDictionary
         
         switch call.method {
             case "getInfo":

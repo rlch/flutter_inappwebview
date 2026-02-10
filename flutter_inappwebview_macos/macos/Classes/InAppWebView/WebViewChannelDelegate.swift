@@ -256,7 +256,8 @@ public class WebViewChannelDelegate: ChannelDelegate {
             }
             break
         case .clearCache:
-            webView?.clearCache()
+            let date = NSDate(timeIntervalSince1970: 0)
+            WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: date as Date, completionHandler:{ })
             result(true)
             break
         case .scrollTo:
@@ -486,7 +487,7 @@ public class WebViewChannelDelegate: ChannelDelegate {
             break
         case .postWebMessage:
             if let webView = webView {
-                var message = WebMessage.fromMap(map: arguments!["message"] as! [String: Any?])
+                let message = WebMessage.fromMap(map: arguments!["message"] as! [String: Any?])
                 let targetOrigin = arguments!["targetOrigin"] as! String
                 
                 var ports: [WebMessagePort] = []

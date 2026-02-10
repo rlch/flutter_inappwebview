@@ -158,8 +158,9 @@ public class InAppWebView: WKWebView, WKUIDelegate,
                 isInspectable = settings.isInspectable
             }
             
-            if settings.clearCache {
-                clearCache()
+            if settings.value(forKey: "clearCache") as? Bool == true {
+                let date = NSDate(timeIntervalSince1970: 0)
+                WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: date as Date, completionHandler:{ })
             }
         }
         
@@ -740,8 +741,9 @@ public class InAppWebView: WKWebView, WKUIDelegate,
             configuration.preferences.setValue(newSettings.allowFileAccessFromFileURLs, forKey: "allowFileAccessFromFileURLs")
         }
         
-        if newSettingsMap["clearCache"] != nil && newSettings.clearCache {
-            clearCache()
+        if newSettingsMap["clearCache"] != nil && newSettings.value(forKey: "clearCache") as? Bool == true {
+            let date = NSDate(timeIntervalSince1970: 0)
+            WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: date as Date, completionHandler:{ })
         }
         
         if newSettingsMap["javaScriptEnabled"] != nil && settings?.javaScriptEnabled != newSettings.javaScriptEnabled {
@@ -2277,7 +2279,11 @@ public class InAppWebView: WKWebView, WKUIDelegate,
                            let numberOfMatches = findResult["numberOfMatches"] as? Int,
                            let isDoneCounting = findResult["isDoneCounting"] as? Bool {
                             webView.findInteractionController?.channelDelegate?.onFindResultReceived(activeMatchOrdinal: activeMatchOrdinal, numberOfMatches: numberOfMatches, isDoneCounting: isDoneCounting)
-                            webView.channelDelegate?.onFindResultReceived(activeMatchOrdinal: activeMatchOrdinal, numberOfMatches: numberOfMatches, isDoneCounting: isDoneCounting)
+                            webView.channelDelegate?.channel?.invokeMethod("onFindResultReceived", arguments: [
+                "activeMatchOrdinal": activeMatchOrdinal,
+                "numberOfMatches": numberOfMatches,
+                "isDoneCounting": isDoneCounting
+            ] as [String : Any?])
                         }
                     }
                     break
